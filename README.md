@@ -4,6 +4,10 @@
 
 ---
 
+## Where are the wallpapers
+
+You need to generate them yourself. I can not provide pre-made wallpapers because the png file is modified each time you run the script. You will have to generate them yourself. Maybe at one point i can generate them and provide them in the releases.
+
 ## Features
 
 - **Automated Workflow**: Write LaTeX Beamer slides, convert to PDF, and export to PNG wallpapers.
