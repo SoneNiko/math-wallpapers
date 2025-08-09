@@ -1,0 +1,20 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{wallpaper}
+
+% Proof that the Y-Combinator is a fixed point combinator (fix f = (f.fix) f)
+
+\begin{document}
+\begin{wallpaperframe}
+\[
+\text{fix}\, f = f\,(\text{fix}\, f)
+\]
+\begin{align*}
+    Y &= \lambda f.\: (\lambda x.\:f\,(x\,x))\:(\lambda x.\:f\,(x\,x))\, \\
+    \Rightarrow Y\, g &= \lambda f.\: (\lambda x.\:f\,(x\,x))\:(\lambda x.\:f\,(x\,x))\, g \\
+    &= (\lambda x.\: g\, (x\,x))\:(\lambda x.\: g\, (x\,x)) \\
+    &= g\, ((\lambda x.\: g\, (x\,x))\:(\lambda x.\: g\, (x\,x))) \\
+    &= g\,(Y\:g)
+  \end{align*}
+
+\end{wallpaperframe}
+\end{document}

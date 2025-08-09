@@ -1,0 +1,29 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{wallpaper}[2025/08/09 Custom Beamer wallpaper style]
+
+% --- Load required packages ---
+\RequirePackage{xcolor}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{tikz}
+\RequirePackage{inconsolata}
+
+% --- Color definitions ---
+\definecolor{background}{RGB}{26,26,26}
+\definecolor{foreground}{RGB}{255,255,255}
+
+% --- Beamer color setup ---
+\setbeamercolor{background canvas}{bg=background}
+\setbeamercolor{normal text}{fg=foreground}
+\setbeamercolor{frametitle}{fg=foreground, bg=background}
+\setbeamercolor{title}{fg=foreground, bg=background}
+\setbeamercolor{block title}{fg=foreground, bg=background}
+\setbeamercolor{block body}{fg=foreground, bg=background}
+
+% --- Remove navigation symbols ---
+\setbeamertemplate{navigation symbols}{}
+
+% --- Custom frame environment ---
+\newenvironment{wallpaperframe}
+  {\begin{frame}[plain]\centering}
+  {\end{frame}}
