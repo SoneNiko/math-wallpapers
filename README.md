@@ -25,10 +25,14 @@ You need to generate them yourself. I can not provide pre-made wallpapers becaus
 
 ### Usage
 
+Bash (root not required):
 ```bash
 git clone https://github.com/yourusername/math-wallpapers.git
 cd math-wallpapers
-python wallpapers.py
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python3 wallpapers.py
 ```
 
 ---
