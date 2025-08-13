@@ -49,7 +49,7 @@ def convert_pdf_to_png(pdf_name_without_extension):
     """
     try:
         subprocess.run(
-            ["magick", "-density", "1000", f"{pdf_name_without_extension}.pdf", "-quality", "100", f"{pdf_name_without_extension}.png"],
+            ["convert", "-density", "1000", f"{pdf_name_without_extension}.pdf", "-quality", "100", f"{pdf_name_without_extension}.png"],
             check=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL

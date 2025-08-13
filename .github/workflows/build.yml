@@ -34,6 +34,12 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
+      - name: Move wallpaper.sty to texmf-local
+        run: |
+          sudo mkdir -p /usr/local/texlive/texmf-local/tex/latex
+          sudo cp wallpaper.sty /usr/local/texlive/texmf-local/tex/latex/
+          sudo mktexlsr
+
       - name: Run wallpapers.py
         run: |
           source venv/bin/activate
