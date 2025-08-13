@@ -37,6 +37,7 @@ jobs:
       - name: Run wallpapers.py
         run: |
           source venv/bin/activate
+          which latexmk
           python wallpapers.py
 
       - name: Zip results folder
