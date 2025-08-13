@@ -1,0 +1,68 @@
+name: Build and Release Wallpapers
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive texlive-latex-extra dvipng
+
+      - name: Set up virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+
+      - name: Install requirements
+        run: |
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run wallpapers.py
+        run: |
+          source venv/bin/activate
+          python wallpapers.py
+
+      - name: Zip results folder
+        run: |
+          zip -r results.zip results
+
+      - name: Prepare individual files
+        id: prepare_files
+        run: |
+          mkdir release_files
+          find results -type f | while read file; do
+            newname=$(echo "$file" | sed 's/results\///; s/\//-/g')
+            cp "$file" "release_files/$newname"
+          done
+          echo "files=$(ls release_files | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: "Automated release for tag ${{ github.ref_name }}"
+          files: |
+            results.zip
+            release_files/*
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
