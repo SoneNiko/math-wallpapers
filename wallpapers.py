@@ -89,8 +89,9 @@ def generate_singular_wallpaper(path_to_tex_file):
 
     
 def generate_list_of_wallpapers():
-    print(glob.glob("**/*.tex", recursive=True))
-    return glob.glob("**/*.tex", recursive=True)
+    list_of_wallpapers = glob.glob("**/*.tex", recursive=True).remove("template.tex")
+    print(list_of_wallpapers)
+    return list_of_wallpapers
 
 
 def main():
