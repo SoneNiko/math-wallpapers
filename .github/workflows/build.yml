@@ -69,8 +69,26 @@ jobs:
           files: |
             results.zip
             release_files/*
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build giant index.html
+        run: |
+          echo "<!DOCTYPE html><html><head><title>All Wallpapers</title></head><body>" > index.html
+          for img in release_files/*.png; do
+            fname=$(basename "$img")
+            echo "<img src=\"https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/$fname\" alt=\"$fname\" style=\"max-width:400px; margin-bottom:30px\"><br>" >> index.html
+              done
+              echo "</body></html>" >> index.html
+
+      - name: Upload index.html as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: index.html
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
           
