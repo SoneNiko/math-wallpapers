@@ -21,7 +21,7 @@ jobs:
       - name: Install LaTeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive texlive-latex-extra dvipng
+          sudo apt-get install -y texlive-full
 
       - name: Set up virtual environment
         run: |
@@ -37,7 +37,6 @@ jobs:
       - name: Run wallpapers.py
         run: |
           source venv/bin/activate
-          which latexmk
           python wallpapers.py
 
       - name: Zip results folder
