@@ -12,6 +12,9 @@ on:
 
 jobs:
   build-and-release:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
