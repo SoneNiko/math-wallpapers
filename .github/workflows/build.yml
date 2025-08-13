@@ -21,7 +21,7 @@ jobs:
       - name: Install LaTeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive texlive-latex-extra dvipng latexmk imagemagick
+          sudo apt-get install -y texlive-full imagemagick
 
       - name: Set up virtual environment
         run: |
