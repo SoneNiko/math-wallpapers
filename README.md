@@ -6,7 +6,7 @@
 
 ## Where are the wallpapers
 
-You need to generate them yourself. I can not provide pre-made wallpapers because the png file is modified each time you run the script. You will have to generate them yourself. Maybe at one point i can generate them and provide them in the releases.
+You can view them [here](https://soneniko.github.io/math-wallpapers/)
 
 ## Features
 
@@ -50,3 +50,7 @@ python3 wallpapers.py
 
 - Fork and submit pull requests for new wallpapers or improvements.
 - Please follow the folder structure and naming conventions.
+
+## Releases
+
+Releases are created by pushing a tag of any kind. All wallpapers will be built and added to the release. The github pages preview is also updated.
