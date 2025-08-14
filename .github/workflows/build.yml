@@ -28,11 +28,7 @@ jobs:
       - name: Install LaTeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y imagemagick
-          sudo apt install `sudo apt --assume-no install texlive-full | \
-            awk '/The following additional packages will be installed/{f=1;next} /Suggested packages/{f=0} f' | \
-            tr ' ' '\n' | grep -vP 'doc$' | grep -vP 'texlive-lang' | grep -vP 'latex-cjk' | tr '\n' ' '`
-          sudo apt install texlive-lang-english
+          sudo apt-get install -y imagemagick texlive-full
 
       - name: Set up virtual environment
         run: |
