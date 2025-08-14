@@ -28,7 +28,7 @@ jobs:
       - name: Install LaTeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-full imagemagick
+          sudo apt-get install -y texlive-latex-recommended imagemagick
 
       - name: Set up virtual environment
         run: |
@@ -79,20 +79,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+
+#             echo "<img src=\"https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/$fname\" alt=\"$fname\" style=\"max-width:400px; margin-bottom:30px\"><br>" >> index.html
+
       - name: Build giant index.html
         run: |
           echo "<!DOCTYPE html><html><head><title>All Wallpapers</title></head><body>" > index.html
           for img in release_files/*.png; do
             fname=$(basename "$img")
-            echo "<img src=\"https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/$fname\" alt=\"$fname\" style=\"max-width:400px; margin-bottom:30px\"><br>" >> index.html
+            echo "<img src=\"$fname\" alt=\"$fname\" style=\"max-width:400px; margin-bottom:30px\"><br>" >> index.html
           done
           echo "</body></html>" >> index.html
+          mv index.html release_files/
       
-      - name: Upload index.html as artifact
+      - name: Upload release_files as artifact
         id: uploading
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: index.html
+          path: release_files
 
       - name: Deploy to GitHub Pages
         id: deployment
