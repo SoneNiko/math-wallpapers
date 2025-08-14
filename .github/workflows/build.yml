@@ -84,10 +84,10 @@ jobs:
 
       - name: Build giant index.html
         run: |
-          echo "<!DOCTYPE html><html><head><title>All Wallpapers</title></head><body style=\"justify-self: center\"><h1>All Wallpapers from <a href=\"https://github.com/SoneNiko/math-wallpapers\">math-wallpapers</a></h1>" > index.html
+          echo "<!DOCTYPE html><html><head><title>All Wallpapers</title></head><body style=\"justify-self: center; font-family: sans-serif\"><h1>All Wallpapers from <a href=\"https://github.com/SoneNiko/math-wallpapers\">math-wallpapers</a></h1>" > index.html
           for img in release_files/*.png; do
             fname=$(basename "$img")
-            echo "<h4 style=\"margin-bottom: 0px\">$fname</h4>"
+            echo "<h4 style=\"margin-bottom: 0px\">$fname</h4>" >> index.html
             echo "<img src=\"$fname\" alt=\"$fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
           done
           echo "</body></html>" >> index.html
