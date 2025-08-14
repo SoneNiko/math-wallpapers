@@ -12,11 +12,7 @@ on:
 
 jobs:
   build-and-release:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -89,13 +85,13 @@ jobs:
           for img in release_files/*.png; do
             fname=$(basename "$img")
             echo "<img src=\"https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/$fname\" alt=\"$fname\" style=\"max-width:400px; margin-bottom:30px\"><br>" >> index.html
-              done
-              echo "</body></html>" >> index.html
-
+          done
+          echo "</body></html>" >> index.html
+      
       - name: Upload index.html as artifact
-        uses: actions/upload-artifact@v4
+        id: deployment
+        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          name: github-pages
           path: index.html
 
       - name: Deploy to GitHub Pages
