@@ -2,9 +2,12 @@ import os
 import glob
 import subprocess
 from tqdm import tqdm
+import shutil
 import yaml
 
 results_dir = "results"
+
+
 
 def cleanup_latexmk_byproducts(base_filename):
     """
@@ -101,11 +104,7 @@ def main():
             if os.isatty(0):
                 response = input(f"The '{results_dir}' folder is not empty. Do you want to clear it? [Y/n/q]: ").strip().lower()
                 if response in ("y", ""):
-                    for f in os.listdir(results_dir):
-                        try:
-                            os.remove(os.path.join(results_dir, f))
-                        except Exception as e:
-                            print(f"Could not remove {f}: {e}")
+                    shutil.rmtree(results_dir)
                 elif response == "q":
                     print("Quitting as requested.")
                     exit(0)
