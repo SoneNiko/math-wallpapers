@@ -89,7 +89,7 @@ jobs:
           echo "</body></html>" >> index.html
       
       - name: Upload index.html as artifact
-        id: deployment
+        id: uploading
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
           path: index.html
