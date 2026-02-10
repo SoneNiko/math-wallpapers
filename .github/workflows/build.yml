@@ -111,11 +111,18 @@ jobs:
           echo "</body></html>" >> index.html
           mv index.html release_files/
       
+      - name: Create deploy folder
+        run: |
+          mkdir -p deploy
+          cp -r release_files/* deploy/
+          cp -r release_files_inverted/* deploy/
+          cp release_files/index.html deploy/
+      
       - name: Upload release_files as artifact
         id: uploading
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: release_files
+          path: deploy
 
       - name: Deploy to GitHub Pages
         id: deployment
