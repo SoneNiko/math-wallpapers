@@ -75,7 +75,7 @@ jobs:
         run: |
           mkdir release_files_inverted
           find results-inverted -type f | while read file; do
-            newname=$(echo "$file" | sed 's/results\///; s/\//-/g')
+            newname=$(echo "$file" | sed 's/results-inverted\///; s/\//-/g')
             cp "$file" "release_files_inverted/inv_$newname"
           done
           echo "files=$(ls release_files_inverted | tr '\n' ',' | sed 's/,$//')"
@@ -105,8 +105,8 @@ jobs:
             fname=$(basename "$img")
             inv_fname="inv_$fname"
             echo "<h4 style=\"margin-bottom: 0px\">$fname ; $inv_fname</h4>" >> index.html
-            echo "<img src=\"$fname\" alt=\"$fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
-            echo "<img src=\"$inv_fname\" alt=\"$inv_fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
+            echo "<img src=\"./$fname\" alt=\"$fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
+            echo "<img src=\"./$inv_fname\" alt=\"$inv_fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
           done
           echo "</body></html>" >> index.html
           mv index.html release_files/
