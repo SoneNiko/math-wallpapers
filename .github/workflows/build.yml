@@ -71,7 +71,7 @@ jobs:
           echo "files=$(ls release_files | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
 
       - name: Prepare individual files inverted
-        id: prepare_files
+        id: prepare_files_inverted
         run: |
           mkdir release_files_inverted
           find results-inverted -type f | while read file; do
