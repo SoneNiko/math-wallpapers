@@ -68,7 +68,7 @@ jobs:
             newname=$(echo "$file" | sed 's/results\///; s/\//-/g')
             cp "$file" "release_files/$newname"
           done
-          echo "files=$(ls release_files | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+          echo "files=$(ls release_files | tr '\n' ',' | sed 's/,$//')"
 
       - name: Prepare individual files inverted
         id: prepare_files_inverted
@@ -78,7 +78,7 @@ jobs:
             newname=$(echo "$file" | sed 's/results\///; s/\//-/g')
             cp "$file" "release_files_inverted/inv_$newname"
           done
-          echo "files=$(ls release_files_inverted | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT_INVERTED
+          echo "files=$(ls release_files_inverted | tr '\n' ',' | sed 's/,$//')"
 
       - name: Create Release
         id: create_release
