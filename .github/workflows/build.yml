@@ -56,6 +56,10 @@ jobs:
         run: |
           zip -r results.zip results
 
+      - name: Zip results-inverted folder
+        run: |
+          zip -r results-inverted.zip results-inverted
+
       - name: Prepare individual files
         id: prepare_files
         run: |
@@ -66,6 +70,16 @@ jobs:
           done
           echo "files=$(ls release_files | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
 
+      - name: Prepare individual files inverted
+        id: prepare_files
+        run: |
+          mkdir release_files_inverted
+          find results-inverted -type f | while read file; do
+            newname=$(echo "$file" | sed 's/results\///; s/\//-/g')
+            cp "$file" "release_files_inverted/inv_$newname"
+          done
+          echo "files=$(ls release_files_inverted | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT_INVERTED
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -74,8 +88,10 @@ jobs:
           name: Release ${{ github.ref_name }}
           body: "Automated release for tag ${{ github.ref_name }}"
           files: |
+            results-inverted.zip
             results.zip
             release_files/*
+            release_files_inverted/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -87,8 +103,10 @@ jobs:
           echo "<!DOCTYPE html><html><head><title>All Wallpapers</title></head><body style=\"justify-self: center; font-family: sans-serif\"><h1>All Wallpapers from <a href=\"https://github.com/SoneNiko/math-wallpapers\">math-wallpapers</a></h1>" > index.html
           for img in release_files/*.png; do
             fname=$(basename "$img")
-            echo "<h4 style=\"margin-bottom: 0px\">$fname</h4>" >> index.html
+            inv_fname="inv_$fname"
+            echo "<h4 style=\"margin-bottom: 0px\">$fname ; $inv_fname</h4>" >> index.html
             echo "<img src=\"$fname\" alt=\"$fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
+            echo "<img src=\"$inv_fname\" alt=\"$inv_fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
           done
           echo "</body></html>" >> index.html
           mv index.html release_files/

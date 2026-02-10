@@ -59,6 +59,21 @@ def convert_pdf_to_png(pdf_name_without_extension):
         )
     except subprocess.CalledProcessError as e:
         print(f"Failed to generate png from pdf for {pdf_name_without_extension}: {e}")
+
+def invert_png_and_save(src_png_path, dest_png_path):
+    """
+    Inverts the colors of a PNG file using ImageMagick and saves to dest_png_path.
+
+    Args:
+        src_png_path (str): Path to the source PNG file.
+        dest_png_path (str): Path to save the inverted PNG file.
+    """
+    try:
+        subprocess.run([
+            "convert", src_png_path, "-channel", "RGB", "-negate", dest_png_path
+        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to invert PNG {src_png_path}: {e}")
         
 
 def generate_singular_wallpaper(path_to_tex_file):
@@ -87,6 +102,16 @@ def generate_singular_wallpaper(path_to_tex_file):
         os.replace(png_filename, dest_path)
     else:
         print(f"PNG file {png_filename} does not exist and cannot be moved.")
+
+    # Invert PNG and save to results-inverted, preserving structure
+    results_inverted_dir = "results-inverted"
+    inverted_dest_dir = os.path.join(results_inverted_dir, rel_dir)
+    os.makedirs(inverted_dest_dir, exist_ok=True)
+    inverted_dest_path = os.path.join(inverted_dest_dir, os.path.basename(png_filename))
+    if os.path.exists(dest_path):
+        invert_png_and_save(dest_path, inverted_dest_path)
+    else:
+        print(f"PNG file {dest_path} does not exist for inversion.")
 
     cleanup_latexmk_byproducts(base_filename)
 
