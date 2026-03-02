@@ -43,7 +43,9 @@ jobs:
           sudo apt-get install -y --no-install-recommends             imagemagick             latexmk             texlive-latex-extra             texlive-fonts-extra             texlive-science             texlive-pictures
 
       - name: Install ImageMagick (always)
-        run: sudo apt-get install -y --no-install-recommends imagemagick
+        run: |
+          sudo apt-get install -y --no-install-recommends imagemagick ghostscript
+          sudo find /etc/ImageMagick* -name policy.xml -exec sudo sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' {} \;
 
       - name: Install requirements
         run: pip install -r requirements.txt
