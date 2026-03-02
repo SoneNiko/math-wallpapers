@@ -1,0 +1,15 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{wallpaper}
+
+\begin{document}
+\begin{wallpaperframe}
+\textbf{RSA Encryption} relies on the hardness of integer factorization.
+\begin{align*}
+  n &= p \cdot q \quad (p,\, q \text{ prime}) \\
+  \phi(n) &= (p-1)(q-1) \\
+  e \cdot d &\equiv 1 \pmod{\phi(n)} \\
+  c &= m^e \bmod n \\
+  m &= c^d \bmod n
+\end{align*}
+\end{wallpaperframe}
+\end{document}
