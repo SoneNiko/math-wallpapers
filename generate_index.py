@@ -88,15 +88,13 @@ def generate_html(release_dir='release_files'):
 <title>Math Wallpapers</title>
 <style>
   :root {{
-    --bg: #0f0f1a;
-    --sidebar-bg: #16162a;
-    --card-bg: #1a1a2e;
-    --accent: #7c6af7;
-    --accent2: #a78bfa;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --border: #2d2d4e;
-    --hover: #252540;
+    --bg: #1a1a1a;
+    --sidebar-bg: #111111;
+    --card-bg: #1a1a1a;
+    --text: #ffffff;
+    --muted: #888888;
+    --border: #333333;
+    --hover: #242424;
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{ background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; display: flex; min-height: 100vh; }}
@@ -114,15 +112,15 @@ def generate_html(release_dir='release_files'):
     padding: 20px 16px 12px;
     border-bottom: 1px solid var(--border);
   }}
-  .sidebar-header h1 {{ font-size: 1.1rem; color: var(--accent2); margin-bottom: 8px; }}
+  .sidebar-header h1 {{ font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }}
   .sidebar-header .count {{ font-size: 0.78rem; color: var(--muted); }}
   #search {{
     width: 100%; padding: 8px 12px; margin-top: 10px;
     background: var(--bg); border: 1px solid var(--border);
-    border-radius: 6px; color: var(--text); font-size: 0.85rem;
+    border-radius: 0; color: var(--text); font-size: 0.85rem;
     outline: none;
   }}
-  #search:focus {{ border-color: var(--accent); }}
+  #search:focus {{ border-color: var(--text); }}
   .tree-nav {{ padding: 8px 0; flex: 1; }}
   .tree-category {{ border-bottom: 1px solid var(--border); }}
   .tree-cat-header {{
@@ -142,7 +140,7 @@ def generate_html(release_dir='release_files'):
     transition: background 0.15s, color 0.15s;
   }}
   .tree-subcat:hover {{ background: var(--hover); color: var(--text); }}
-  .count {{ background: var(--border); color: var(--muted); font-size: 0.72rem; padding: 1px 6px; border-radius: 10px; }}
+  .count {{ background: var(--border); color: var(--muted); font-size: 0.72rem; padding: 1px 6px; }}
 
   /* Main content */
   #main {{
@@ -150,43 +148,44 @@ def generate_html(release_dir='release_files'):
     max-width: 1600px;
   }}
   .page-title {{
-    font-size: 1.8rem; font-weight: 700; color: var(--accent2);
+    font-size: 1.8rem; font-weight: 700; color: var(--text);
     margin-bottom: 4px;
   }}
   .page-subtitle {{ color: var(--muted); font-size: 0.9rem; margin-bottom: 36px; }}
-  .page-subtitle a {{ color: var(--accent); text-decoration: none; }}
-  .page-subtitle a:hover {{ text-decoration: underline; }}
+  .page-subtitle a {{ color: var(--text); text-decoration: none; border-bottom: 1px solid var(--muted); }}
+  .page-subtitle a:hover {{ border-bottom-color: var(--text); }}
 
   .category-section {{ margin-bottom: 48px; }}
   .cat-title {{
-    font-size: 1.3rem; font-weight: 700; color: var(--accent2);
-    padding: 8px 0; border-bottom: 2px solid var(--border);
+    font-size: 1.3rem; font-weight: 700; color: var(--text);
+    padding: 8px 0; border-bottom: 1px solid var(--border);
     margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em;
   }}
   .subcat-section {{ margin-bottom: 32px; }}
   .subcat-title {{
     font-size: 1rem; font-weight: 600; color: var(--text);
     margin-bottom: 14px; padding: 6px 12px;
-    background: var(--card-bg); border-radius: 6px;
-    border-left: 3px solid var(--accent);
+    background: var(--sidebar-bg);
+    border-left: 2px solid var(--text);
   }}
   .breadcrumb {{ color: var(--muted); font-weight: 400; font-size: 0.85rem; }}
 
   .wallpaper-grid {{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 20px;
+    gap: 1px;
+    background: var(--border);
   }}
   .wallpaper-card {{
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 10px; overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
+    overflow: hidden;
+    transition: background 0.15s;
   }}
-  .wallpaper-card:hover {{ border-color: var(--accent); transform: translateY(-2px); }}
+  .wallpaper-card:hover {{ background: var(--hover); }}
   .wallpaper-title {{
     padding: 10px 14px; font-size: 0.88rem;
     font-weight: 600; color: var(--text);
+    border-bottom: 1px solid var(--border);
   }}
   .wallpaper-viewer {{ position: relative; aspect-ratio: 16/9; background: #000; }}
   .wp-img {{
@@ -195,18 +194,20 @@ def generate_html(release_dir='release_files'):
   }}
   .wp-img.active {{ display: block; }}
   .wallpaper-controls {{
-    padding: 8px 10px; display: flex; gap: 8px; flex-wrap: wrap;
+    padding: 8px 10px; display: flex; gap: 0; flex-wrap: wrap;
     border-top: 1px solid var(--border);
   }}
   .toggle-btn, .dl-btn {{
-    padding: 4px 10px; font-size: 0.78rem; border-radius: 5px;
-    border: 1px solid var(--border); background: var(--bg);
+    padding: 5px 12px; font-size: 0.78rem;
+    border: none; border-right: 1px solid var(--border);
+    background: var(--sidebar-bg);
     color: var(--muted); cursor: pointer; text-decoration: none;
     transition: background 0.15s, color 0.15s;
   }}
   .toggle-btn:hover, .dl-btn:hover {{
-    background: var(--accent); color: #fff; border-color: var(--accent);
+    background: var(--border); color: var(--text);
   }}
+  .dl-btn:last-child {{ border-right: none; }}
 
   /* Hide filtered cards */
   .wallpaper-card.hidden {{ display: none; }}
