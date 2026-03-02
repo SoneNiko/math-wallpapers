@@ -134,14 +134,17 @@ def main():
                     print("Quitting as requested.")
                     exit(0)
             else:
-                for f in os.listdir(results_dir):
-                    try:
-                        os.remove(os.path.join(results_dir, f))
-                    except Exception as e:
-                        print(f"Could not remove {f}: {e}")
+                shutil.rmtree(results_dir)
 
-    for wallpaper in tqdm(generate_list_of_wallpapers(), desc="Generating wallpapers", unit="file"):
-        generate_singular_wallpaper(wallpaper)
+    wallpapers = generate_list_of_wallpapers()
+
+    # Use parallel processing - number of workers = number of CPU cores
+    import multiprocessing
+    num_workers = multiprocessing.cpu_count()
+    print(f"Compiling {len(wallpapers)} wallpapers using {num_workers} workers...")
+
+    with multiprocessing.Pool(processes=num_workers) as pool:
+        list(tqdm(pool.imap(generate_singular_wallpaper, wallpapers), total=len(wallpapers), desc="Generating wallpapers", unit="file"))
 
 
 if __name__ == '__main__':

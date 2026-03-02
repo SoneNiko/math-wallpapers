@@ -24,22 +24,29 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
+
+      - name: Cache LaTeX packages
+        id: cache-latex
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /usr/share/texmf
+            /usr/share/texlive
+          key: latex-${{ runner.os }}-v2
 
       - name: Install LaTeX
+        if: steps.cache-latex.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update
-          sudo apt-get install -y imagemagick texlive-full
+          sudo apt-get install -y --no-install-recommends             imagemagick             latexmk             texlive-latex-extra             texlive-fonts-extra             texlive-science             texlive-pictures
 
-      - name: Set up virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install --upgrade pip
+      - name: Install ImageMagick (always)
+        run: sudo apt-get install -y --no-install-recommends imagemagick
 
       - name: Install requirements
-        run: |
-          source venv/bin/activate
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Move wallpaper.sty to texmf-local
         run: |
@@ -48,17 +55,13 @@ jobs:
           sudo mktexlsr
 
       - name: Run wallpapers.py
-        run: |
-          source venv/bin/activate
-          python wallpapers.py
+        run: python wallpapers.py
 
       - name: Zip results folder
-        run: |
-          zip -r results.zip results
+        run: zip -r results.zip results
 
       - name: Zip results-inverted folder
-        run: |
-          zip -r results-inverted.zip results-inverted
+        run: zip -r results-inverted.zip results-inverted
 
       - name: Prepare individual files
         id: prepare_files
@@ -68,7 +71,6 @@ jobs:
             newname=$(echo "$file" | sed 's/results\///; s/\//-/g')
             cp "$file" "release_files/$newname"
           done
-          echo "files=$(ls release_files | tr '\n' ',' | sed 's/,$//')"
 
       - name: Prepare individual files inverted
         id: prepare_files_inverted
@@ -78,7 +80,9 @@ jobs:
             newname=$(echo "$file" | sed 's/results-inverted\///; s/\//-/g')
             cp "$file" "release_files_inverted/inv_$newname"
           done
-          echo "files=$(ls release_files_inverted | tr '\n' ',' | sed 's/,$//')"
+
+      - name: Build gallery index.html
+        run: python generate_index.py
 
       - name: Create Release
         id: create_release
@@ -95,29 +99,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-
-#             echo "<img src=\"https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/$fname\" alt=\"$fname\" style=\"max-width:400px; margin-bottom:30px\"><br>" >> index.html
-
-      - name: Build gallery index.html
-        run: |
-          source venv/bin/activate
-          python generate_index.py
-      
       - name: Create deploy folder
         run: |
           mkdir -p deploy
           cp -r release_files/* deploy/
           cp -r release_files_inverted/* deploy/
-          cp release_files/index.html deploy/
-      
-      - name: Upload release_files as artifact
-        id: uploading
-        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: deploy
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-          
