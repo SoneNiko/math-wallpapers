@@ -98,18 +98,10 @@ jobs:
 
 #             echo "<img src=\"https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/$fname\" alt=\"$fname\" style=\"max-width:400px; margin-bottom:30px\"><br>" >> index.html
 
-      - name: Build giant index.html
+      - name: Build gallery index.html
         run: |
-          echo "<!DOCTYPE html><html><head><title>All Wallpapers</title></head><body style=\"justify-self: center; font-family: sans-serif\"><h1>All Wallpapers from <a href=\"https://github.com/SoneNiko/math-wallpapers\">math-wallpapers</a></h1>" > index.html
-          for img in release_files/*.png; do
-            fname=$(basename "$img")
-            inv_fname="inv_$fname"
-            echo "<h4 style=\"margin-bottom: 0px\">$fname ; $inv_fname</h4>" >> index.html
-            echo "<img src=\"./$fname\" alt=\"$fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
-            echo "<img src=\"./$inv_fname\" alt=\"$inv_fname\" style=\"max-width:600px; margin-bottom:30px\"><br>" >> index.html
-          done
-          echo "</body></html>" >> index.html
-          mv index.html release_files/
+          source venv/bin/activate
+          python generate_index.py
       
       - name: Create deploy folder
         run: |
