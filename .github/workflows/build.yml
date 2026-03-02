@@ -106,7 +106,7 @@ jobs:
           cp -r release_files_inverted/* deploy/
 
       - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: deploy
 
