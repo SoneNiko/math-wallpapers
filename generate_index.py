@@ -42,7 +42,7 @@ def generate_html(release_dir='release_files'):
         for subcat in sorted(tree[cat].keys()):
             anch = anchor([cat, subcat])
             sidebar_items.append(f'''
-            <div class="tree-subcat" onclick="scrollTo('{anch}')">{title(subcat)} <span class="count">{len(tree[cat][subcat])}</span></div>''')
+            <div class="tree-subcat" onclick="jumpTo('{anch}')">{title(subcat)} <span class="count">{len(tree[cat][subcat])}</span></div>''')
         sidebar_items.append('          </div>\n        </div>')
 
     # Build main content HTML
@@ -253,7 +253,7 @@ def generate_html(release_dir='release_files'):
     }}
   }}
 
-  function scrollTo(id) {{
+  function jumpTo(id) {{
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }}
