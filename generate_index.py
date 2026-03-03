@@ -171,7 +171,7 @@ def generate_html(release_dir='release_files'):
 
   .wallpaper-grid {{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(760px, 1fr));
     gap: 1px;
     background: var(--bg);
   }}
