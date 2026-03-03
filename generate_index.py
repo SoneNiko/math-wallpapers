@@ -171,7 +171,7 @@ def generate_html(release_dir='release_files'):
 
   .wallpaper-grid {{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(760px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1px;
     background: var(--bg);
   }}
@@ -210,6 +210,17 @@ def generate_html(release_dir='release_files'):
   }}
   .dl-btn:last-child {{ border-right: none; }}
 
+  .sidebar-footer {{
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    margin-top: auto;
+  }}
+  .sidebar-footer a {{
+    color: var(--muted); text-decoration: none; font-size: 0.82rem;
+    transition: color 0.15s;
+  }}
+  .sidebar-footer a:hover {{ color: var(--text); }}
+
   /* Hide filtered cards */
   .wallpaper-card.hidden {{ display: none; }}
   .subcat-section.empty {{ display: none; }}
@@ -232,6 +243,9 @@ def generate_html(release_dir='release_files'):
   </div>
   <div class="tree-nav">
     {sidebar_html}
+    <div class="sidebar-footer">
+      <a href="https://github.com/SoneNiko/math-wallpapers" target="_blank">⎋ GitHub Repository</a>
+    </div>
   </div>
 </nav>
 
