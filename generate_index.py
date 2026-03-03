@@ -206,6 +206,23 @@ def generate_html(release_dir='release_files'):
     transition: background 0.15s, color 0.15s;
   }}
   .toggle-btn:hover {{ background: var(--border); color: var(--text); }}
+
+  /* Desktop: side-by-side images, hide toggle */
+  @media (min-width: 769px) {{
+    .wallpaper-viewer {{
+      display: flex;
+      position: static;
+      aspect-ratio: unset;
+    }}
+    .wp-img {{
+      display: block !important;
+      position: static !important;
+      width: 50%;
+      height: auto;
+      aspect-ratio: 16/9;
+    }}
+    .toggle-btn {{ display: none; }}
+  }}
   .wallpaper-controls {{
     padding: 8px 10px; display: flex; gap: 0; flex-wrap: wrap;
     border-top: 1px solid var(--border);
@@ -237,18 +254,6 @@ def generate_html(release_dir='release_files'):
   .wallpaper-card.hidden {{ display: none; }}
   .subcat-section.empty {{ display: none; }}
   .category-section.empty {{ display: none; }}
-
-  /* Desktop: side-by-side images, hide toggle */
-  @media (min-width: 769px) {{
-    .wallpaper-viewer {{
-      display: flex; aspect-ratio: unset;
-    }}
-    .wp-img {{
-      width: 50%; aspect-ratio: 16/9;
-      display: block; position: static;
-    }}
-    .toggle-btn {{ display: none; }}
-  }}
 
   /* Mobile toggle button - hidden on desktop */
   #sidebar-toggle {{
@@ -296,7 +301,7 @@ def generate_html(release_dir='release_files'):
       padding-top: 64px;
     }}
     .wallpaper-grid {{ grid-template-columns: 1fr; }}
-    .wp-img {{ width: 50%; aspect-ratio: 16/9; }}
+    .wallpaper-grid {{ grid-template-columns: 1fr; }}
   }}
 </style>
 </head>
