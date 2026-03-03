@@ -3,13 +3,13 @@
 
 \begin{document}
 \begin{wallpaperframe}
-\textbf{RSA Encryption} relies on the hardness of integer factorization.
+Let $n = pq$ for distinct primes $p, q$, and let $e, d$ satisfy $e \cdot d \equiv 1 \pmod{\phi(n)}$.
 \begin{align*}
-  n &= p \cdot q \quad (p,\, q \text{ prime}) \\
-  \phi(n) &= (p-1)(q-1) \\
-  e \cdot d &\equiv 1 \pmod{\phi(n)} \\
-  c &= m^e \bmod n \\
-  m &= c^d \bmod n
+\mathcal{E}_e &: \mathbb{Z}_n \to \mathbb{Z}_n, \quad m \mapsto m^e \bmod n \\
+\mathcal{D}_d &: \mathbb{Z}_n \to \mathbb{Z}_n, \quad c \mapsto c^d \bmod n
 \end{align*}
+\[
+\mathcal{D}_d \circ \mathcal{E}_e = \mathrm{id}_{\mathbb{Z}_n}
+\]
 \end{wallpaperframe}
 \end{document}

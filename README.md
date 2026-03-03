@@ -46,6 +46,42 @@ python3 wallpapers.py
 
 ---
 
+
+---
+
+## Wallpaper Style Guidelines
+
+Wallpapers follow a strict visual style to maintain consistency across the collection.
+
+### Mathematical Content
+- Wallpapers present a single mathematical concept — a theorem, identity, construction, or definition.
+- The primary content is **display mathematics**: `align*`, `\[...\]`, or `\Huge` for single formulas.
+- Text is used sparingly:
+  - **Allowed**: logical connectives (*then*, *implies*, *such that*, *let*, *for*), sentence glue setting up a definition or theorem.
+  - **Allowed in definitions**: formal definitional prose (e.g. "Let $(\Omega, \mathbb{P})$ be a probability space").
+  - **Not allowed**: explanatory paragraphs, motivational text, historical notes, or informal descriptions.
+- When in doubt: if it can be expressed as a formula, express it as a formula.
+
+### LaTeX Structure
+Every wallpaper is a self-contained `.tex` file:
+```latex
+\documentclass[aspectratio=169]{beamer}
+\usepackage{wallpaper}
+
+\begin{document}
+\begin{wallpaperframe}
+% content here
+\end{wallpaperframe}
+\end{document}
+```
+The `wallpaper` package handles all styling (colors, fonts, layout). Do not add custom colors, \setbeamercolor, or \tikz unless part of the mathematical content itself.
+
+### Examples of good style
+- A single `\Huge` formula (Stirling, Euler identity)
+- A short setup sentence followed by display math (Bayes, Mandelbrot)
+- A clean `align*` block of equations (Maxwell, RSA)
+- A formal set-builder definition with logical connectives
+
 ## Contributing
 
 - Fork and submit pull requests for new wallpapers or improvements.

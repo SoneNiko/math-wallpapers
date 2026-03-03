@@ -64,10 +64,11 @@ def generate_html(release_dir='release_files'):
               <div class="wallpaper-card" id="{anch_wp}" data-search="{title(cat)} {title(subcat)} {wp_title}">
                 <div class="wallpaper-title">{wp_title}</div>
                 <div class="wallpaper-viewer">
-                  <img class="wp-img" src="./{fname}" alt="{wp_title}" loading="lazy">
+                  <img class="wp-img active" src="./{fname}" alt="{wp_title}" loading="lazy">
                   <img class="wp-img" src="./{inv_fname}" alt="{wp_title} inverted" loading="lazy">
                 </div>
                 <div class="wallpaper-controls">
+                  <button class="toggle-btn" onclick="toggleInvert(this)">⬛ Invert</button>
                   <a class="dl-btn" href="./{fname}" download>↓ Normal</a>
                   <a class="dl-btn" href="./{inv_fname}" download>↓ Inverted</a>
                 </div>
@@ -187,12 +188,24 @@ def generate_html(release_dir='release_files'):
     font-weight: 600; color: var(--text);
     border-bottom: 1px solid var(--border);
   }}
+  /* Mobile: single image with toggle */
   .wallpaper-viewer {{
-    display: flex; gap: 0; background: #000;
+    position: relative; background: #000; aspect-ratio: 16/9;
   }}
   .wp-img {{
-    width: 50%; aspect-ratio: 16/9; object-fit: cover; display: block;
+    width: 100%; height: 100%; object-fit: cover;
+    display: none; position: absolute; top: 0; left: 0;
   }}
+  .wp-img.active {{ display: block; }}
+  .toggle-btn {{
+    display: inline-block;
+    padding: 5px 12px; font-size: 0.78rem;
+    border: none; border-right: 1px solid var(--border);
+    background: var(--sidebar-bg);
+    color: var(--muted); cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }}
+  .toggle-btn:hover {{ background: var(--border); color: var(--text); }}
   .wallpaper-controls {{
     padding: 8px 10px; display: flex; gap: 0; flex-wrap: wrap;
     border-top: 1px solid var(--border);
@@ -205,9 +218,8 @@ def generate_html(release_dir='release_files'):
     transition: background 0.15s, color 0.15s;
     display: inline-block;
   }}
-  .dl-btn:hover {{
-    background: var(--border); color: var(--text);
-  }}
+  .dl-btn:hover {{ background: var(--border); color: var(--text); }}
+  .dl-btn:last-child {{ border-right: none; }}
   .dl-btn:last-child {{ border-right: none; }}
 
   .sidebar-footer {{
@@ -225,6 +237,18 @@ def generate_html(release_dir='release_files'):
   .wallpaper-card.hidden {{ display: none; }}
   .subcat-section.empty {{ display: none; }}
   .category-section.empty {{ display: none; }}
+
+  /* Desktop: side-by-side images, hide toggle */
+  @media (min-width: 769px) {{
+    .wallpaper-viewer {{
+      display: flex; aspect-ratio: unset;
+    }}
+    .wp-img {{
+      width: 50%; aspect-ratio: 16/9;
+      display: block; position: static;
+    }}
+    .toggle-btn {{ display: none; }}
+  }}
 
   /* Mobile toggle button - hidden on desktop */
   #sidebar-toggle {{
@@ -325,6 +349,13 @@ def generate_html(release_dir='release_files'):
     const overlay = document.getElementById('sidebar-overlay');
     sidebar.classList.toggle('open');
     overlay.classList.toggle('open');
+  }}
+
+  function toggleInvert(btn) {{
+    const viewer = btn.closest('.wallpaper-card').querySelector('.wallpaper-viewer');
+    const imgs = viewer.querySelectorAll('.wp-img');
+    imgs.forEach(img => img.classList.toggle('active'));
+    btn.textContent = imgs[0].classList.contains('active') ? '⬛ Invert' : '⬜ Normal';
   }}
 
   function filterWallpapers(query) {{
