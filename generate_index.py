@@ -226,14 +226,59 @@ def generate_html(release_dir='release_files'):
   .subcat-section.empty {{ display: none; }}
   .category-section.empty {{ display: none; }}
 
+  /* Mobile toggle button - hidden on desktop */
+  #sidebar-toggle {{
+    display: none;
+  }}
+  #sidebar-overlay {{
+    display: none;
+  }}
+
   @media (max-width: 768px) {{
-    #sidebar {{ width: 100%; height: auto; position: relative; }}
-    #main {{ margin-left: 0; padding: 16px; }}
+    #sidebar-toggle {{
+      display: block;
+      position: fixed;
+      top: 12px; left: 12px;
+      z-index: 200;
+      background: var(--sidebar-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-size: 1.2rem;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      line-height: 1;
+    }}
+    #sidebar {{
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      z-index: 150;
+    }}
+    #sidebar.open {{
+      transform: translateX(0);
+    }}
+    #sidebar-overlay {{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 140;
+      display: none;
+    }}
+    #sidebar-overlay.open {{
+      display: block;
+    }}
+    #main {{
+      margin-left: 0;
+      padding: 16px;
+      padding-top: 64px;
+    }}
     .wallpaper-grid {{ grid-template-columns: 1fr; }}
+    .wp-img {{ width: 50%; aspect-ratio: 16/9; }}
   }}
 </style>
 </head>
 <body>
+
+<button id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation">&#9776;</button>
 
 <nav id="sidebar">
   <div class="sidebar-header">
@@ -248,6 +293,7 @@ def generate_html(release_dir='release_files'):
     </div>
   </div>
 </nav>
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <main id="main">
   <div class="page-title">Math Wallpapers</div>
@@ -273,6 +319,13 @@ def generate_html(release_dir='release_files'):
     if (el) el.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }}
 
+
+  function toggleSidebar() {{
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+  }}
 
   function filterWallpapers(query) {{
     const q = query.toLowerCase();
