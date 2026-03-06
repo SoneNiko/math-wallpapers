@@ -3,9 +3,11 @@
 
 \begin{document}
 \begin{wallpaperframe}
-A \textbf{functor} $F : \mathcal{C} \to \mathcal{D}$ maps objects and morphisms
-between categories, preserving composition and identities:
+\[
+F : \mathcal{C} \to \mathcal{D}
+\]
 \begin{align*}
+  F_{A,B} &: \mathrm{Hom}_{\mathcal{C}}(A, B) \;\longrightarrow\; \mathrm{Hom}_{\mathcal{D}}(F(A),\, F(B)) \\[6pt]
   F(\mathrm{id}_A) &= \mathrm{id}_{F(A)} \\
   F(g \circ f)     &= F(g) \circ F(f)
 \end{align*}
