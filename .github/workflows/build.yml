@@ -28,7 +28,7 @@ jobs:
 
       - name: Cache LaTeX packages
         id: cache-latex
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             /var/cache/apt/archives
