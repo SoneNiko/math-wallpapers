@@ -311,14 +311,13 @@ def generate_html(release_dir='release_files'):
 
 <nav id="sidebar">
   <div class="sidebar-header">
-    <h1>🧮 Math Wallpapers</h1>
-    <div class="count">{total} wallpapers</div>
+    <h1>Math Wallpapers</h1>
     <input id="search" type="text" placeholder="Search wallpapers..." oninput="filterWallpapers(this.value)">
   </div>
   <div class="tree-nav">
     {sidebar_html}
     <div class="sidebar-footer">
-      <a href="https://github.com/SoneNiko/math-wallpapers" target="_blank">⎋ GitHub Repository</a>
+      <a href="https://github.com/SoneNiko/math-wallpapers" target="_blank">GitHub Repository</a>
     </div>
   </div>
 </nav>
@@ -326,7 +325,6 @@ def generate_html(release_dir='release_files'):
 
 <main id="main">
   <div class="page-title">Math Wallpapers</div>
-  <div class="page-subtitle">{total} wallpapers &mdash; <a href="https://github.com/SoneNiko/math-wallpapers">View on GitHub</a></div>
   {content_html}
 </main>
 

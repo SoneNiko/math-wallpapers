@@ -20,7 +20,7 @@ You can view them [here](https://soneniko.github.io/math-wallpapers/)
 ### Prerequisites
 
 - [LaTeX](https://www.latex-project.org/) (with Beamer)
-- [ImageMagick](https://imagemagick.org/) (for PDF → PNG)
+- [ImageMagick](https://imagemagick.org/) (for PDF to PNG conversion)
 - Bash, Python 3
 
 ### Usage
@@ -54,13 +54,13 @@ python3 wallpapers.py
 Wallpapers follow a strict visual style to maintain consistency across the collection.
 
 ### Mathematical Content
-- Wallpapers present a single mathematical concept — a theorem, identity, construction, or definition.
+- Wallpapers present a single mathematical concept. A theorem, identity, construction, or definition.
 - The primary content is **display mathematics**: `align*`, `\[...\]`, or `\Huge` for single formulas.
 - Text is used sparingly:
   - **Allowed**: logical connectives (*then*, *implies*, *such that*, *let*, *for*), sentence glue setting up a definition or theorem.
   - **Allowed in definitions**: formal definitional prose (e.g. "Let $(\Omega, \mathbb{P})$ be a probability space").
   - **Not allowed**: explanatory paragraphs, motivational text, historical notes, or informal descriptions.
-- When in doubt: if it can be expressed as a formula, express it as a formula.
+- When in doubt: if it can be expressed as a formula using **common** notation (not anything like `\because` or `\therefore`, though I like them personally), express it as a formula. Just do stuff you would commonly see in equation environments in papers. Also read some math papers please, I haven't and we need someone to have done that. 
 
 ### LaTeX Structure
 Every wallpaper is a self-contained `.tex` file:
